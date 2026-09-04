@@ -1,0 +1,20 @@
+# Optional: quick local PostgreSQL for development.
+# Run: docker compose up -d
+# Then set DATABASE_URL=postgresql+psycopg2://fraud_user:fraud_pass@localhost:5432/fraud_detection_db
+version: "3.8"
+services:
+  postgres:
+    image: postgres:16
+    container_name: fraud_detection_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: fraud_user
+      POSTGRES_PASSWORD: fraud_pass
+      POSTGRES_DB: fraud_detection_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
