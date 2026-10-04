@@ -1,4 +1,4 @@
-# Enterprise Credit Card Fraud Detection & Risk Analysis System
+# Credit Card Fraud Detection & Risk Analysis System
 ### Using Ensemble Machine Learning, Dynamic Feature Engineering, and Explainable AI (SHAP)
 
 A production-grade, full-stack Credit Card Fraud Detection platform built with **FastAPI**, **React**, **PostgreSQL / SQLite**, **scikit-learn**, **XGBoost**, **LightGBM**, and **CatBoost**.
