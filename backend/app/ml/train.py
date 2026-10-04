@@ -78,8 +78,12 @@ def _curve_subsample(x: np.ndarray, y: np.ndarray, max_points: int = 100) -> Tup
 
 
 def evaluate_model(pipeline: ImbPipeline, X_test: pd.DataFrame, y_test: pd.Series, model_name: str) -> dict:
+    clf = pipeline.named_steps["clf"]
+    classes = getattr(clf, "classes_", np.array([0, 1]))
+    fraud_idx = int(np.where(classes == 1)[0][0]) if 1 in classes else 1
+    proba = pipeline.predict_proba(X_test)
+    y_proba = proba[:, fraud_idx]
     y_pred = pipeline.predict(X_test)
-    y_proba = pipeline.predict_proba(X_test)[:, 1]
 
     fpr, tpr, _ = roc_curve(y_test, y_proba)
     prec_curve, rec_curve, _ = precision_recall_curve(y_test, y_proba)

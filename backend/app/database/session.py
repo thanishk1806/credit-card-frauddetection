@@ -1,8 +1,8 @@
 """
-SQLAlchemy engine / session setup for PostgreSQL.
+SQLAlchemy engine / session setup for SQLite / PostgreSQL with automatic column migration.
 """
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 from app.config import get_settings
 
@@ -25,10 +25,30 @@ def get_db():
 
 
 def init_db() -> None:
-    """Create all tables. Called on application startup.
+    """Create all tables and auto-migrate missing columns on existing SQLite/PostgreSQL databases."""
+    from app.models import prediction, user  # noqa: F401  (register models)
 
-    For a real production system, Alembic migrations would be preferred
-    over create_all(); for an academic mini-project this keeps setup simple.
-    """
-    from app.models import user, prediction  # noqa: F401  (register models)
     Base.metadata.create_all(bind=engine)
+
+    # Automatically migrate missing columns if table already existed prior to schema upgrade
+    try:
+        with engine.begin() as conn:
+            if settings.DATABASE_URL.startswith("sqlite"):
+                result = conn.execute(text("PRAGMA table_info(predictions)"))
+                existing_cols = {row[1] for row in result.fetchall()}
+                new_cols = [
+                    ("amount", "FLOAT"),
+                    ("transaction_type", "VARCHAR(32)"),
+                    ("merchant_category", "VARCHAR(32)"),
+                    ("location", "VARCHAR(128)"),
+                    ("device_type", "VARCHAR(32)"),
+                    ("card_present", "BOOLEAN DEFAULT 0"),
+                    ("international_transaction", "BOOLEAN DEFAULT 0"),
+                    ("transaction_timestamp", "DATETIME"),
+                    ("derived_features", "JSON"),
+                ]
+                for col_name, col_type in new_cols:
+                    if col_name not in existing_cols:
+                        conn.execute(text(f"ALTER TABLE predictions ADD COLUMN {col_name} {col_type}"))
+    except Exception:
+        pass

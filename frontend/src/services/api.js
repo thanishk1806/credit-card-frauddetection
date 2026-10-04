@@ -33,6 +33,7 @@ export const authApi = {
 
 export const dashboardApi = {
   summary: () => api.get('/dashboard/summary'),
+  liveStats: () => api.get('/dashboard/live-stats'),
   modelPerformance: () => api.get('/models/performance'),
   bestModel: () => api.get('/models/best'),
 }

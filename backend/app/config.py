@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # backend/
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    APP_NAME: str = "Intelligent Credit Card Fraud Detection System"
+    APP_NAME: str = "TrustCheck"
     ENV: str = "development"
 
     # Database
@@ -28,8 +28,7 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     JWT_EXPIRE_MINUTES: int = 60
 
-    # CORS
-    CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
+    CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174,http://localhost:3000,http://127.0.0.1:3000,http://localhost:8000,http://127.0.0.1:8000"
 
     # Dataset / models
     DATASET_PATH: str = "../data/creditcard.csv"

@@ -27,8 +27,9 @@ export default function Register() {
   return (
     <div className="auth-page">
       <div className="auth-card">
+        <div className="auth-brand">Trust<span>Check</span></div>
         <h1>Create your account</h1>
-        <p className="subtitle">Get started with FraudGuard AI</p>
+        <p className="subtitle">Get started with TrustCheck</p>
         <ErrorBanner message={error} />
         <form onSubmit={handleSubmit}>
           <div className="field">

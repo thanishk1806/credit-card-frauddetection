@@ -27,8 +27,9 @@ export default function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card">
+        <div className="auth-brand">Trust<span>Check</span></div>
         <h1>Welcome back</h1>
-        <p className="subtitle">Sign in to FraudGuard AI</p>
+        <p className="subtitle">Sign in to your account</p>
         <ErrorBanner message={error} />
         <form onSubmit={handleSubmit}>
           <div className="field">

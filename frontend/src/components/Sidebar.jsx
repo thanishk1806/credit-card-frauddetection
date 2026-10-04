@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext'
 const NAV_ITEMS = [
   { to: '/', label: 'Dashboard', icon: '📊' },
   { to: '/predict', label: 'Predict Transaction', icon: '🔍' },
-  { to: '/models', label: 'Model Performance', icon: '🧠' },
+  { to: '/models', label: 'Model Performance', icon: '📈' },
   { to: '/reports', label: 'Reports', icon: '📄' },
   { to: '/profile', label: 'Profile', icon: '👤' },
 ]
@@ -16,8 +16,8 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div>
-        <div className="sidebar-logo">Fraud<span>Guard</span> AI</div>
-        <div className="sidebar-sub">Ensemble ML + Explainable AI</div>
+        <div className="sidebar-logo">Trust<span>Check</span></div>
+        <div className="sidebar-sub">Smart Transaction Risk Analysis</div>
       </div>
 
       <nav>
